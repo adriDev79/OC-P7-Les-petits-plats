@@ -1,48 +1,58 @@
-const filterIngredient = (recipes, divItems, divDropdownMenu) => {
-  const inputIngredient = document.querySelector("#input-ingredients");
-  inputIngredient.addEventListener("input", () => {
-    const ingredientValue = inputIngredient.value.toLowerCase(); // Convertir en minuscules pour une recherche insensible à la casse
 
-    const divElement = document.createElement("div");
-    divElement.className = "div_items";
+export const filterIngredient = (input) => {
+  console.log('val', input.target.value);
+  console.log('Ingredients');
+  
 
-    const items = [];
+  // const divElement = document.createElement("div");
+  //   divElement.className = "div_items";
 
-    recipes.forEach((recipe) => {
-      recipe.ingredients.forEach((ingredient) => {
-        if (
-          divDropdownMenu.getAttribute("data-type") === "ingredients" &&
-          ingredient.ingredient.toLowerCase().includes(ingredientValue)
-        ) {
-          items.push(ingredient.ingredient);
-        }
-        console.log(items);
-      });
-    });
+  //   console.log('je passe ici')
 
-    // Si l'input est vide, afficher tous les éléments
-    if (ingredientValue === "") {
-      items.length = 0;
-      recipes.forEach((recipe) => {
-        recipe.ingredients.forEach((ingredient) => {
-          items.push(ingredient.ingredient);
-        });
-      });
-    }
+  //   const items = [];
 
-    divElement.innerHTML = "";
+  //   recipes.forEach((recipe) => {
+  //     recipe.ingredients.forEach((ingredient) => {
+  //       if (
+  //         divDropdownMenu.getAttribute("data-type") === "ingredients" &&
+  //         ingredient.ingredient.toLowerCase().includes(ingredientValue)
+  //       ) {
+  //         items.push(ingredient.ingredient);
+  //       }
+  //       console.log(items);
+  //     });
+  //   });
 
-    items.forEach((item) => {
-      const a = document.createElement("a");
-      a.className = "dropdown-item";
-      a.innerHTML = item;
-      divElement.appendChild(a);
-    });
-    // eslint-disable-next-line no-param-reassign
-    divDropdownMenu.innerHTML = "";
-    divDropdownMenu.appendChild(divElement);
-  });
+  //   // Si l'input est vide, afficher tous les éléments
+  //   if (ingredientValue === "") {
+  //     items.length = 0;
+  //     recipes.forEach((recipe) => {
+  //       recipe.ingredients.forEach((ingredient) => {
+  //         items.push(ingredient.ingredient);
+  //       });
+  //     });
+  //   }
+
+  //   divElement.innerHTML = "";
+
+  //   items.forEach((item) => {
+  //     const a = document.createElement("a");
+  //     a.className = "dropdown-item";
+  //     a.innerHTML = item;
+  //     divElement.appendChild(a);
+  //   });
+  //   // eslint-disable-next-line no-param-reassign
+  //   divDropdownMenu.innerHTML = "";
+  //   divDropdownMenu.appendChild(divElement);
 };
+
+export const filterUstensils = () => {
+  console.log('Ustensils');
+}
+
+export const filterAppliance = () => {
+  console.log('Appliance');
+}
 
 // eslint-disable-line import/prefer-default-export
 // eslint-disable-next-line import/prefer-default-export
@@ -95,6 +105,8 @@ export function initInputFilter(inputName, recipes) {
   spanIcon.className = "icon";
   const icon = document.createElement("i");
   icon.className = "fas fa-search";
+  icon.setAttribute("id", `icon-search-${inputName}`);
+
 
   // ajout des items
   const items = [];
@@ -147,13 +159,4 @@ export function initInputFilter(inputName, recipes) {
   divDropdown.appendChild(divDropdownMenu);
 
   divDropdownContain.appendChild(divDropdown);
-
-  // 1 fois que la page est chargé on lance la fonction event
-  if (document.readyState === "complete") {
-    filterIngredient(recipes, divItems, divDropdownMenu);
-  } else {
-    document.addEventListener("DOMContentLoaded", () => {
-      filterIngredient(recipes, divItems, divDropdownMenu);
-    });
-  }
 }
